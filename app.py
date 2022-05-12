@@ -105,7 +105,6 @@
 #     main()
 
 import av
-import time
 import streamlit as st
 from aiortc.contrib.media import MediaRecorder
 
@@ -113,22 +112,11 @@ from streamlit_webrtc import VideoProcessorBase, WebRtcMode, webrtc_streamer
 
 
 def app():
-    class OpenCVEdgeProcessor(VideoProcessorBase):
-        def recv(self, frame: av.VideoFrame) -> av.VideoFrame:
-            img = frame.to_ndarray(format="bgr24")
-
-            # perform edge detection
-            img = cv2.cvtColor(cv2.Canny(img, 100, 200), cv2.COLOR_GRAY2BGR)
-
-            return av.VideoFrame.from_ndarray(img, format="bgr24")
-
+    st.write("Click start button to record audio.")
     def in_recorder_factory() -> MediaRecorder:
         return MediaRecorder(
-            "input.mp3", format="mp3"
-        )  # HLS does not work. See https://github.com/aiortc/aiortc/issues/331
-
-    def out_recorder_factory() -> MediaRecorder:
-        return
+            "input.wav", format="wav"
+        )
 
     webrtc_streamer(
         key="loopback",
@@ -138,13 +126,11 @@ def app():
             "video": False,
             "audio": True,
         },
-        # video_processor_factory=OpenCVEdgeProcessor,
+        sendback_audio=False,
         in_recorder_factory=in_recorder_factory,
-        out_recorder_factory=out_recorder_factory,
     )
     try:
-        time.sleep(1)
-        st.audio('input.mp3', format="audio/mp3", start_time=0)
+        st.audio('input.wav', format="audio/wav")
     except:
         st.write("No record media.")
 

@@ -105,7 +105,6 @@
 #     main()
 
 import av
-import cv2
 import time
 import streamlit as st
 from aiortc.contrib.media import MediaRecorder

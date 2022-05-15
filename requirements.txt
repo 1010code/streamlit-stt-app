@@ -3,3 +3,11 @@ deepspeech==0.9.3
 pydub==0.25.1
 streamlit==1.9.0
 streamlit_webrtc==0.37.0
+
+
+pytorch==1.10.1
+torchvision==0.11.2
+torchaudio==0.10.1
+soundfile==0.10.3.post1
+librosa==0.9.1
+transformers==4.19.1
